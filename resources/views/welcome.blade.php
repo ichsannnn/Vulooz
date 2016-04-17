@@ -14,10 +14,16 @@
 		<link href="{{url('assets/css/animate.css')}}" rel="stylesheet">
 		<link href="{{url('assets/css/style.css')}}" rel="stylesheet">
     <link href="{{url('assets/css/landing.css')}}" rel="stylesheet">
+		<link href="{{url('assets/css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <style>
       #navbar{
         overflow-x: hidden;
       }
+
+			#loginButton{
+				transition: all .3s;
+			}
+
     </style>
 	</head>
 	<body id="page-top" class="landing-page">
@@ -41,6 +47,7 @@
 							<li><a class="page-scroll" href="#testimonials">Testimonials</a></li>
 							<li><a class="page-scroll" href="#pricing">Pricing</a></li>
 							<li><a class="page-scroll" href="#contact">Contact</a></li>
+							<li><a data-toggle="modal" href="{{ url('/login') }}" data-target="#loginModal">Login</a></li>
 						</ul>
 					</div>
 				</div>
@@ -66,9 +73,7 @@
 								<a class="caption-link" href="#" role="button">Inspinia Theme</a>
 							</p>
 						</div>
-						<div class="carousel-image wow zoomIn">
-							<img src="img/landing/laptop.png" alt="laptop"/>
-						</div>
+
 					</div>
 					<!-- Set background for slide in css -->
 					<div class="header-back one"></div>
@@ -595,6 +600,39 @@
 				</div>
 			</div>
 		</section>
+
+    <div class="modal">
+			<div class="modal inmodal" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+        	<div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <i class="fa fa-lock modal-icon"></i>
+                <h4 class="modal-title">Login</h4>
+            </div>
+						<form id="formLogin" action="{{ url('/auth/login') }}" method="post">
+	            <div class="modal-body">
+									<div class="form-group">
+										<label>Email</label>
+										<input type="email" placeholder="Email" class="form-control">
+									</div>
+									<div class="form-group">
+										<label>Password</label>
+										<input type="password" placeholder="Password" class="form-control">
+									</div>
+									<div>
+			                <div class="i-checks"><label> <input type="checkbox"><i></i> Remember me </label></div>
+			            </div>
+	            </div>
+	            <div class="modal-footer">
+										<button class="btn btn-primary btn-block" type="submit" id="loginButton" >Login</button>
+	            </div>
+						</form>
+          </div>
+        </div>
+    	</div>
+    </div>
+
 		<script src="{{url('assets/js/jquery-2.1.1.js')}}"></script>
 		<script src="{{url('assets/js/bootstrap.min.js')}}"></script>
 		<script src="{{url('assets/js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
@@ -615,8 +653,26 @@
 		<script src="{{url('assets/js/plugins/chartJs/Chart.min.js')}}"></script>
 		<script src="{{url('assets/js/plugins/toastr/toastr.min.js')}}"></script>
 		<script src="{{url('assets/js/plugins/wow/wow.js')}}"></script>
+		<script src="{{url('assets/js/plugins/iCheck/icheck.min.js')}}"></script>
 		<script>
 			$(document).ready(function () {
+				$('#formLogin').submit(function(e){
+					e.preventDefault();
+					$("#loginButton").html('<i class="fa fa-circle-o-notch fa-spin fa-fw margin-bottom"></i><span class="sr-only">Loading...</span>');
+					$("#loginButton").addClass('disabled');
+					// $.ajax({
+					// 	url: 'server.php',
+					// 	success: function(html){
+					// 		$('#tampilan').html(html);
+					// 	}
+					// });
+				});
+
+          $('.i-checks').iCheck({
+              checkboxClass: 'icheckbox_square-green',
+              radioClass: 'iradio_square-green',
+          });
+
 
 			    $('body').scrollspy({
 			        target: '.navbar-fixed-top',
